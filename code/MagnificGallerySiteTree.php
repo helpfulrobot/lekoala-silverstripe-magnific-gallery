@@ -6,7 +6,7 @@
 class MagnificGallerySiteTree extends SiteTreeExtension
 {
 
-    function getGalleryFor($urlSegment = null)
+    public function getGalleryFor($urlSegment = null)
     {
         $galleries = MagnificGalleryPage::get();
         if (!empty($urlSegment)) {
@@ -15,7 +15,7 @@ class MagnificGallerySiteTree extends SiteTreeExtension
         return $galleries->first();
     }
 
-    function RecentImages($count = 5, $urlSegment = null)
+    public function RecentImages($count = 5, $urlSegment = null)
     {
         $gallery = $this->getGalleryFor($urlSegment);
         if ($gallery) {

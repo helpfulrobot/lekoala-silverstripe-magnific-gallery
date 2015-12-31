@@ -139,7 +139,7 @@ class MagnificGalleryItem extends DataObject
                 $member);
     }
 
-    function onBeforeWrite()
+    public function onBeforeWrite()
     {
         parent::onBeforeWrite();
         if (!$this->SortOrder) {
@@ -147,9 +147,10 @@ class MagnificGalleryItem extends DataObject
         }
     }
 
-    function onBeforeDelete() {
+    public function onBeforeDelete()
+    {
         parent::onBeforeDelete();
-        if($this->ImageID && $this->Image()->ID) {
+        if ($this->ImageID && $this->Image()->ID) {
             $this->Image()->delete();
         }
     }

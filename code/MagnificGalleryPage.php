@@ -36,13 +36,13 @@ class MagnificGalleryPage extends Page
             'kira', 'steve', 'moses', 'jazz', 'ming', 'lexi', 'duke');
     }
 
-    function onBeforeWrite()
+    public function onBeforeWrite()
     {
         parent::onBeforeWrite();
         $this->checkFolder();
     }
 
-    function onBeforeDelete()
+    public function onBeforeDelete()
     {
         // check if Page still exists in live mode
         $className = $this->ClassName;
@@ -66,7 +66,7 @@ class MagnificGalleryPage extends Page
         parent::onBeforeDelete();
     }
 
-    function checkFolder()
+    public function checkFolder()
     {
         if (!$this->exists()) {
             return;
@@ -98,7 +98,7 @@ class MagnificGalleryPage extends Page
                 $this->RootFolder()->write();
                 $folder->deleteDatabaseOnly(); //Otherwise we keep a stupid clone that will be used as the parent
             } else {
-                 $this->RootFolderID = $folder->ID;
+                $this->RootFolderID = $folder->ID;
             }
         } else {
             $this->RootFolderID = $folder->ID;
@@ -123,7 +123,7 @@ class MagnificGalleryPage extends Page
             // @see composer.json/suggests
             if (class_exists('GridFieldSortableRows')) {
                 $albumConfig->addComponent(new GridFieldSortableRows('SortOrder'));
-            } else if (class_exists('GridFieldOrderableRows')) {
+            } elseif (class_exists('GridFieldOrderableRows')) {
                 $albumConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
             }
             $albumField = new GridField('Albums', 'Albums', $this->Albums(),
@@ -196,7 +196,9 @@ class MagnificGalleryPage_Controller extends Page_Controller
     protected function adjacentAlbum($dir)
     {
         $currentAlbum = $this->CurrentAlbum();
-        if (empty($currentAlbum)) return null;
+        if (empty($currentAlbum)) {
+            return null;
+        }
 
         $direction    = ($dir == "next") ? ">" : "<";
         $sort         = ($dir == "next") ? "ASC" : "DESC";
@@ -255,7 +257,9 @@ class MagnificGalleryPage_Controller extends Page_Controller
      */
     public function CurrentAlbum()
     {
-        if ($this->currentAlbum) return $this->currentAlbum;
+        if ($this->currentAlbum) {
+            return $this->currentAlbum;
+        }
         $params = Controller::curr()->getURLParams();
         if (!empty($params['ID'])) {
             return MagnificGalleryAlbum::get()->filter(array(

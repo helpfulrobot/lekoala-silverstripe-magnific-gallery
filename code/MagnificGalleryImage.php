@@ -58,7 +58,7 @@ class MagnificGalleryImage extends DataExtension
         return $this->owner->getWidth() < $this->owner->getHeight();
     }
 
-    function BackLinkTracking()
+    public function BackLinkTracking()
     {
         return false;
     }
@@ -88,7 +88,7 @@ class MagnificGalleryImage extends DataExtension
         $orientation = null;
         if (isset($exif['IFD0']['Orientation'])) {
             $orientation = $exif['IFD0']['Orientation'];
-        } else if (isset($exif['Orientation'])) {
+        } elseif (isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
         }
 
@@ -97,7 +97,7 @@ class MagnificGalleryImage extends DataExtension
 
     public function onAfterUpload()
     {
-        if(!Config::inst()->get('Image','magnific_auto_rotate')) {
+        if (!Config::inst()->get('Image', 'magnific_auto_rotate')) {
             return;
         }
         $imagePath    = $this->owner->getFullPath();
@@ -131,7 +131,7 @@ class MagnificGalleryImage extends DataExtension
         $this->owner->deleteFormattedImages();
     }
 
-    function updateCMSFields(\FieldList $fields)
+    public function updateCMSFields(\FieldList $fields)
     {
         // Rotate magic
         $f1 = new CheckboxField('RotateClockwise', 'Rotate Clockwise');
@@ -144,7 +144,7 @@ class MagnificGalleryImage extends DataExtension
         $g->setTitle('Rotate on save');
     }
 
-    function replaceOriginal($filename)
+    public function replaceOriginal($filename)
     {
         $filename  = Director::baseFolder().'/'.$filename;
         $ownerFile = Director::baseFolder().'/'.$this->owner->Filename;
@@ -156,7 +156,7 @@ class MagnificGalleryImage extends DataExtension
         $this->owner->deleteFormattedImages();
     }
 
-    function onAfterWrite()
+    public function onAfterWrite()
     {
         parent::onAfterWrite();
 
@@ -167,7 +167,7 @@ class MagnificGalleryImage extends DataExtension
             } elseif (!empty($_POST['RotateCounterClockwise'])) {
                 $image = $this->owner->getFormattedImage('RotateCounterClockwise');
                 $this->replaceOriginal($image->Filename);
-            } else if (!empty($_POST['RotateAuto'])) {
+            } elseif (!empty($_POST['RotateAuto'])) {
                 $image = $this->owner->getFormattedImage('RotateAuto');
                 $this->replaceOriginal($image->Filename);
             }

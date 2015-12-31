@@ -25,7 +25,9 @@ class MagnificGalleryAlbum extends DataObject
 
     public function getTitle()
     {
-        if ($this->AlbumName) return $this->AlbumName;
+        if ($this->AlbumName) {
+            return $this->AlbumName;
+        }
         return parent::getTitle();
     }
 
@@ -86,7 +88,7 @@ class MagnificGalleryAlbum extends DataObject
         // @see composer.json/suggests
         if (class_exists('GridFieldSortableRows')) {
             $galleryConfig->addComponent(new GridFieldSortableRows('SortOrder'));
-        } else if (class_exists('GridFieldOrderableRows')) {
+        } elseif (class_exists('GridFieldOrderableRows')) {
             $galleryConfig->addComponent(new GridFieldOrderableRows('SortOrder'));
         }
 
@@ -154,7 +156,7 @@ class MagnificGalleryAlbum extends DataObject
         return self::config()->cover_height;
     }
 
-    function onBeforeWrite()
+    public function onBeforeWrite()
     {
         parent::onBeforeWrite();
         $this->checkURLSegment();
@@ -180,7 +182,7 @@ class MagnificGalleryAlbum extends DataObject
         return $result;
     }
 
-    function checkFolder()
+    public function checkFolder()
     {
         $folderName = $this->getUploadFolder();
 
@@ -204,7 +206,7 @@ class MagnificGalleryAlbum extends DataObject
         $this->URLSegment = $filter->filter($this->AlbumName);
     }
 
-    function onBeforeDelete()
+    public function onBeforeDelete()
     {
         parent::onBeforeDelete();
         $this->GalleryItems()->removeAll();
